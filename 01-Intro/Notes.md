@@ -1,3 +1,11 @@
+## Table of Contents
+
+- [Definition](#definition)
+- [Differences between ML and Rule-based systems](#differences-between-ml-and-rule-based-systems)
+- [Supervised Machine Learning](#supervised-machine-learning)
+- [CRISP-DM: Main Stages](#crisp-dm-main-stages)
+- [Model Selection Process](#model-selection-process)
+
 # Definition
 
 Machine learning is the process of extracting patterns from data to predict a target value.
@@ -170,8 +178,6 @@ It consists of four main stages:
 In ML projects, it is a common practice to run multiple types of models, score them and compare their results to select the best one.
 
 To achieve this validation, we split the data into three subsets: Training (60%), Validation (20%), Testing (20%).
-
-|Train 60%|Validate 20%|Test 20%|
 
 To identify the best model we need to create a comparison chart, and the best metric to compare is **accuracy** ($\frac{(Successful Ŷ_v - Total Y_v)}{(Total Y_v)}$).
 
