@@ -169,25 +169,35 @@ It consists of four main stages:
 
 In ML projects, it is a common practice to run multiple types of models, score them and compare their results to select the best one.
 
-The best way to compare them is using **accuracy**, which is calculation with the following formula:
-$$
-\frac{(Successful Ŷ_v - Total Y_v)}{(Total Y_v)}
-$$
+To achieve this validation, we split the data into three subsets: Training (60%), Validation (20%), Testing (20%).
 
-When this calculation has been done for multiple models, we can create a comparison chart like this:
+|Train 60%|Validate 20%|Test 20%|
+
+To identify the best model we need to create a comparison chart, and the best metric to compare is **accuracy** ($\frac{(Successful Ŷ_v - Total Y_v)}{(Total Y_v)}$).
+
+After selecting the model with the highest performance on the validation data, we run it on the testing data to confirm the best model is consistent.
+
+#### Validation chart
 |Model|Accuracy|
-|-|-|
-|Log regression|0.7|
-|Decision tree|0.63|
-|Neural network|0.81|
+|-----|--------|
+|LR|60%|
+|DT|61%|
+|RF|67%|
+|NN|__80%__|
+
+Neural Network is run on the testing data and returns 79% of accuracy. It shows consistent results and can be rolled to production.
+
+The model selection process follows these steps:
+1. Split the data
+2. Train the model
+3. Validate the model
+4. Select the best model
+5. Test the selected model
+6. Check the model's performance is consistent
+
 
 ### Example
-The model defined to filter spam emails returns a 70% of probability of accurately detecting spam in its first badge. 
-
-Take 20% of the whole dataset
-Use 80% for training only - Use 20% for validation
-
-After training the model, we run it in the validation dataset and measure its result:
+The model defined to filter spam emails returns a 57% of probability of accurately detecting spam in its first badge. 
 
 #### Accuracy validation for binary classification model
 |$P(Ŷ_v)$|$Ŷ_v$|$Y_v$|val|
@@ -200,6 +210,27 @@ After training the model, we run it in the validation dataset and measure its re
 |0.6 | 1|0|B|
 |0.2 | 0|0|G|
 
-In this case, the model predicted correctly 50% of emails (accuracy)
+This must be done for all the models to compare
 
-Then we do the same exercise with different models and compare.
+#### Validation chart
+|Model|Accuracy|
+|-----|--------|
+|BC|57%|
+|DT|**61%**|
+|MC|38%|
+|NN|25%|
+
+In this case, the best performing model was the __Decision Tree__, so we run it on the testing data to confirm:
+
+#### Accuracy test for decision tree model
+|$Ŷ_t$|$Y_t$|check|
+|-|-|-|
+|0|1|B|
+|1|1|G|
+|1|1|G|
+|0|1|B|
+|0|0|G|
+|0|0|G|
+|1|0|B|
+
+The accuracy of the model in the testing phase was 57%, close enough to the original performance, so we are confident about its consistency over time.
